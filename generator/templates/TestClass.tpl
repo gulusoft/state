@@ -1,4 +1,7 @@
 <?php
+
+___NAME_SPACE___;
+
 class ___STATE___Test extends PHPUnit_Framework_TestCase
 {
     /**

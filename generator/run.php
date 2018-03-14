@@ -11,27 +11,33 @@ if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/autoload.php';
 
-$parser            = new SpecificationParser(new SpecificationFilename);
-$className         = $parser->getClassName();
-$abstractClassName = $parser->getAbstractClassName();
-$interfaceName     = $parser->getInterfaceClassName();
-$operations        = $parser->getOperations();
-$queries           = $parser->getQueries();
-$states            = $parser->getStates();
+$fileNames = glob(dirname(__FILE__)."/../build/*.state.xml");
 
-$generator = new InterfaceGenerator;
-$generator->generate($operations, $interfaceName);
+foreach($fileNames as $fileName) {
+    echo $fileName,PHP_EOL;
+    $parser            = new SpecificationParser(new SpecificationFilename($fileName));
+    $className         = $parser->getClassName();
+    $namespaceName     = "namespace " . $parser->getNamespaceName();
+    $abstractClassName = $parser->getAbstractClassName();
+    $interfaceName     = $parser->getInterfaceClassName();
+    $operations        = $parser->getOperations();
+    $queries           = $parser->getQueries();
+    $states            = $parser->getStates();
 
-$generator = new AbstractStateClassGenerator;
-$generator->generate($operations, $abstractClassName, $interfaceName);
+    $generator = new InterfaceGenerator;
+    $generator->generate($operations, $interfaceName, $namespaceName);
 
-$generator = new ClassGenerator;
-$generator->generate($operations, $states, $className, $interfaceName);
+    $generator = new AbstractStateClassGenerator;
+    $generator->generate($operations, $abstractClassName, $interfaceName, $namespaceName);
 
-$codeGenerator = new StateClassGenerator;
-$testGenerator = new TestGenerator;
+    $generator = new ClassGenerator;
+    $generator->generate($operations, $states, $className, $interfaceName, $namespaceName);
 
-foreach ($states as $state => $data) {
-    $codeGenerator->generate($data, $state, $abstractClassName);
-    $testGenerator->generate($data, $operations, $queries, $states, $state, $className, $abstractClassName);
+    $codeGenerator = new StateClassGenerator;
+    $testGenerator = new TestGenerator;
+
+    foreach ($states as $state => $data) {
+        $codeGenerator->generate($data, $state, $abstractClassName, $namespaceName);
+        $testGenerator->generate($data, $operations, $queries, $states, $state, $className, $abstractClassName, $namespaceName);
+    }
 }

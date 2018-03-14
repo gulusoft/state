@@ -1,4 +1,7 @@
 <?php
-interface ___INTERFACE___
-{___METHODS___
+
+___NAME_SPACE___;
+
+interface ___INTERFACE___ {
+    ___METHODS___
 }

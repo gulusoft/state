@@ -5,7 +5,7 @@ class InterfaceGenerator
      * @param array $operations
      * @param string $interfaceName
      */
-    public function generate(array $operations, $interfaceName)
+    public function generate(array $operations, $interfaceName, $namespaceName)
     {
         $buffer   = '';
         $template = file_get_contents(new TemplateFilename('InterfaceMethod'));
@@ -19,11 +19,13 @@ class InterfaceGenerator
             str_replace(
                 array(
                     '___INTERFACE___',
-                    '___METHODS___'
+                    '___METHODS___',
+                    '___NAME_SPACE___'
                 ),
                 array(
                     $interfaceName,
-                    $buffer
+                    $buffer,
+                    $namespaceName
                 ),
                 file_get_contents(new TemplateFilename('Interface'))
             )

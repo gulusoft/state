@@ -6,7 +6,7 @@ class StateClassGenerator
      * @param string $className
      * @param string $abstractClassName
      */
-    public function generate(array $data, $className, $abstractClassName)
+    public function generate(array $data, $className, $abstractClassName, $namespaceName)
     {
         $buffer   = '';
         $template = file_get_contents(new TemplateFilename('StateClassMethod'));
@@ -31,12 +31,14 @@ class StateClassGenerator
                 array(
                     '___CLASS___',
                     '___ABSTRACT___',
-                    '___METHODS___'
+                    '___METHODS___',
+                    '___NAME_SPACE___'
                 ),
                 array(
                     $className,
                     $abstractClassName,
-                    $buffer
+                    $buffer,
+                    $namespaceName
                 ),
                 file_get_contents(new TemplateFilename('StateClass'))
             )

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <specification>
  <configuration>
-  <class         name="Door"/>
-  <interface     name="DoorState"/>
-  <abstractClass name="AbstractDoorState"/>
+  <namespace     name="beauty\model\order\status"/>
+  <class         name="Order"/>
+  <interface     name="OrderState"/>
+  <abstractClass name="AbstractOrderState"/>
  </configuration>
  <states>
-  <state name="OpenDoorState"   query="isOpen"/>
-  <state name="ClosedDoorState" query="isClosed"/>
-  <state name="LockedDoorState" query="isLocked"/>
+  <state name="ProcessingOrderState"   query="isProcessing"/>
+  <state name="PendingOrderState" query="isPending"/>
+  <state name="PreOrderState" query="isPreOrder"/>
+  <state name="PayedOrderState" query="isPayed"/>
+  <state name="CanceledOrderState" query="isCanceled"/>
+  <state name="RefundedOrderState" query="isRefunded"/>
  </states>
  <transitions>
-  <transition from="ClosedDoorState" to="OpenDoorState"   operation="open"/>
-  <transition from="OpenDoorState"   to="ClosedDoorState" operation="close"/>
-  <transition from="ClosedDoorState" to="LockedDoorState" operation="lock"/>
-  <transition from="LockedDoorState" to="ClosedDoorState" operation="unlock"/>
+  <transition from="ProcessingOrderState" to="PayedOrderState"   operation="pay"/>
+  <transition from="ProcessingOrderState"   to="CanceledOrderState" operation="cancel"/>
+  
  </transitions>
  <operations>
-  <operation name="open"   allowed="canBeOpened"   disallowed="cannotBeOpened"/>
-  <operation name="close"  allowed="canBeClosed"   disallowed="cannotBeClosed"/>
-  <operation name="lock"   allowed="canBeLocked"   disallowed="cannotBeLocked"/>
-  <operation name="unlock" allowed="canBeUnlocked" disallowed="cannotBeUnlocked"/>
+  <operation name="pay"   allowed="canBeOpen"   disallowed="cannotBeOpen"/>
  </operations>
 </specification>

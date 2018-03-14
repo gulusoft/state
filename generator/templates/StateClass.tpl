@@ -1,3 +1,7 @@
 <?php
-class ___CLASS___ extends ___ABSTRACT___
-{___METHODS___}
+
+___NAME_SPACE___;
+
+class ___CLASS___ extends ___ABSTRACT___ {
+    ___METHODS___
+}

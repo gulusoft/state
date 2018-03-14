@@ -1,4 +1,7 @@
 <?php
+
+___NAME_SPACE___;
+
 class ___CLASS___
 {
     /**

@@ -29,6 +29,14 @@ class SpecificationParser
     {
         return $this->dom->queryOne('configuration/class')->getAttribute('name');
     }
+    
+    /**
+     * @return string
+     */
+    public function getNameSpaceName()
+    {
+        return $this->dom->queryOne('configuration/namespace')->getAttribute('name');
+    }
 
     /**
      * @return string

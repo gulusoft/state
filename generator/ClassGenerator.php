@@ -7,7 +7,7 @@ class ClassGenerator
      * @param string $className
      * @param string $interfaceName
      */
-    public function generate(array $operations, array $states, $className, $interfaceName)
+    public function generate(array $operations, array $states, $className, $interfaceName, $namespaceName)
     {
         $buffer   = '';
         $template = file_get_contents(new TemplateFilename('ClassOperation'));
@@ -38,12 +38,14 @@ class ClassGenerator
                 array(
                     '___CLASS___',
                     '___INTERFACE___',
-                    '___METHODS___'
+                    '___METHODS___',
+                    '___NAME_SPACE___'
                 ),
                 array(
                     $className,
                     $interfaceName,
-                    $buffer
+                    $buffer,
+                    $namespaceName
                 ),
                 file_get_contents(new TemplateFilename('Class'))
             )
